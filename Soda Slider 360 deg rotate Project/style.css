@@ -1,0 +1,256 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header{
+    width: 100%;
+    max-width: 90%;
+    height: 50px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 100;
+    color: #eee;
+}
+header h1{
+    font-size: 2rem;
+    font-weight: 800;
+}
+header ul{
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.carousel{
+    width: 100%;
+    max-width: 100vw;
+    height: 680px;
+    margin: auto;
+    background: #333;
+    color: #eee;
+    margin-top: -50px;
+    position: relative;
+    overflow-x: hidden;
+}
+.carousel .list{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+.carousel .list .item{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+}
+.carousel .list .item::before{
+    position: absolute;
+    content: var(--title);
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    font-size: 16em;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #eee3;
+    z-index: -1;
+}
+.carousel .list .item .image{
+    width: 300px;
+    height: 525px;
+    flex-shrink: 0;
+    --left: -200px;
+    background: var(--img-src) var(--left) 0, url(images/soda1.png) no-repeat;
+    background-size: 100% auto;
+    background-blend-mode: multiply;
+    -webkit-mask-image: url(images/soda1.png);
+    -webkit-mask-size: 100% auto;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url(images/soda1.png);
+    mask-size: 100% auto;
+    mask-repeat: no-repeat;
+    transition: background 1s ease-in-out;
+}
+.carousel .list .item .content{
+    width: 1140px;
+    max-width: 90%;
+    height: 100%;
+    padding-top: 50px;
+    margin: auto;
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+.carousel .list .item .content .info .title{
+    font-size: 6em;
+    font-weight: 600;
+    line-height: 1em;
+    text-transform: uppercase;
+}
+.carousel .list .item .content .info .category{
+    opacity: .7;
+    font-size: 2em;
+    font-weight: 600;
+}
+.carousel .list .item .info .des{
+    margin: 1em 0;
+}
+.carousel .list .item .info a{
+    display: inline-flex;
+    gap: 20px;
+    text-decoration: none;
+    color: #eee;
+    font-weight: 500;
+}
+.carousel .list .item.active{
+    z-index: 2;
+}
+.carousel .list .item.active .image{
+    --left: 0;
+}
+.carousel .buttons{
+    width: 100%;
+    margin: auto;
+    padding: 0 2em;
+    position: absolute;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+}
+button{
+    width: 40px;
+    height: 40px;
+    background: #eee5;
+    border: 0;
+    border-radius: 50%;
+    font-size: 1em;
+    line-height: 1em;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+button:hover{
+    background: #eee;
+    color: #333;
+}
+
+/* effect */
+.carousel.effect .list .image,
+.carousel.effect .list .info .title,
+.carousel.effect .list .info .category,
+.carousel.effect .list .info .des,
+.carousel.effect .list .info a{
+    animation: transformAnimation 1s ease-in-out 1 forwards;
+}
+.carousel.effect .list .info .category{
+    animation-delay: .1s;
+}
+.carousel.effect .list .info .des{
+    animation-delay: .2s;
+}
+.carousel.effect .list .info a{
+    animation-delay: .3s;
+}
+.carousel.effect{
+    --transform: 300px;
+}
+.carousel.effect .list .item.active{
+    --transform-from: calc(var(--transform) * -1);
+    --transform-to: 0;
+}
+.carousel.effect .list .item{
+    --transform-from: 0;
+    --transform-to: var(--transform);
+}
+
+@keyframes transformAnimation{
+    from{
+        transform: translateX(var(--transform-from));
+    }to{
+        transform: translateX(var(--transform-to));
+    }
+}
+
+.carousel.effect .item.active{
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    animation: animationClipPath 1s ease-in-out 1 forwards;
+}
+@keyframes animationClipPath{
+    to{
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+/* dots */
+.carousel ul{
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+}
+.carousel ul li{
+    width: 12px;
+    height: 12px;
+    list-style-type: none;
+    background: #fff5;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background .5s ease-in-out;
+}
+.carousel ul li.active{
+    background-color: #eee;
+}
+
+/* Responsive */
+@media screen and (max-width: 727px){
+    .carousel{
+        height: 100vh;
+    }
+    .carousel .list .item .info{
+        box-sizing: border-box;
+        width: 100%;
+        /* height: 40%; */
+        position: absolute;
+        bottom: 10%;
+        padding: 30px;
+        text-align-last: center;
+        backdrop-filter: blur(20px);
+    }
+    .carousel .list .item .content .info .title{
+        font-size: 2em;
+    }
+    .carousel .list .item .content .info .des{
+        font-size: 1rem;
+        text-align: justify;
+    }
+    .carousel .list .item .content{
+        justify-content: center;
+        align-items: start;
+    }
+    .carousel .buttons{
+        top: unset;
+        bottom: 10px;
+    }
+}
