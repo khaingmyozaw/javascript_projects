@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Message</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100vh;
+            padding: 30px;
+            background-color: #346ce4;
+
+            position: relative;
+        }
+        .container .message-box {
+            width: 300px;
+            /* height: 200px; */
+            padding: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
+            position: absolute;
+            bottom: 10px;
+            right: -100%;
+            transition: all .4s;
+        }
+        .message-box.show {
+            right: 10px;
+        }
+        .message-box .title {
+            height: 50px;
+            border-bottom: 1px solid #333;
+            color: #346ce4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .message-box .body {
+            padding: 10px 5px;
+            font-size: 18px;
+        }
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        button {
+            border: 0;
+            border-radius: 5px;
+            padding: 12px 30px;
+            background-color: #346ce4;
+            color: #eee;
+            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+
+            cursor: pointer;
+        }
+        #decline {
+            background-color: #eee;
+            color: #346ce4;
+        }
+        button:hover{
+            background-color: #2450b1;
+            transition: all .3s;
+        }
+        #decline:hover {
+            background: #ddd;;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="message-box">
+            <div class="title">
+                <i class='bx bxs-cookie' style="font-size: 25px;"></i>
+                <h2>Cookie Consent</h2>
+            </div>
+            <div class="body">
+                This website use cookies to help you have a superior and more relavant browsing experience on the website <a href="#">Read more...</a>
+            </div>
+            <div class="footer">
+                <button id="decline">Decline</button>
+                <button id="accept">Accept</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- icon -->
+    <script src="https://kit.fontawesome.com/149adfc48b.js" crossorigin="anonymous"></script>
+
+    <script>
+
+        const get_message_box = document.querySelector('.message-box');
+        const buttons = document.querySelectorAll('button');
+
+
+        function executeCodes() {
+
+            // if cookie contains 'zeembi' it will be returned nothing and this make the below codes stop
+            if(document.cookie.includes('zeembi')) return;
+            
+            get_message_box.classList.add("show");
+
+            buttons.forEach((button) => {
+                button.onclick = _=>{
+                    get_message_box.classList.remove('show');
+
+                    if(button.id == 'accept') {
+                        document.cookie = "cookieBy= zeembi; max-age=" + 60 * 60 * 24 * 30;
+                                            // 60 = 1min / 60 = 1hour / 24 = 1day / 30 = 1month
+                    }
+                }
+            })
+        }
+
+        window.addEventListener("load", executeCodes);
+
+    </script>
+
+</body>
+</html>
