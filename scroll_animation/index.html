@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Animation</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            color: #333;
+
+            font-family: poppins;
+        }
+
+        .container {
+            width: 100%;
+            height: 350vh;
+            background-color: white;
+
+            display: flex;
+            position: relative;
+        }
+
+        .left-container {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-container {
+            position: relative;
+        }
+
+        .container element {
+            height: 100vh;
+            flex-basis: 50%;
+
+            position: sticky;
+            top: 0;
+        }
+
+        .content-container {
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        p.content {
+            width: 80%;
+        }
+
+        button {
+            width: max-content;
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            border-radius: 24px;
+            border: none;
+            outline: none;
+
+            color: white;
+            background-color: #333;
+            cursor: pointer;
+        }
+
+        .cards {
+            width: 350px;
+            height: 350px;
+            padding: 2rem;
+            border-radius: 24px;
+
+            position: absolute;
+            top: calc(50% - 175px);
+            left: calc(50% - 175px);
+            transition: .4s;
+        }
+
+        .cards h2 {
+            font-size: 2.4rem;
+            margin-top: 6rem;
+        }
+
+        .cards:nth-child(1) {
+            background-color: #4287f5;
+        }
+
+        .cards:nth-child(2) {
+            background-color: #7837f0;
+        }
+
+        .cards:nth-child(3) {
+            background-color: #f06237;
+        }
+
+        .cards:nth-child(4) {
+            background-color: #f03749;
+        }
+
+        .cards:nth-child(5) {
+            background-color: #2dba7a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <element class="left-container">
+            <h1>
+                ZEMBI's <br> Contents
+            </h1>
+            <p class="content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, veniam sunt. Voluptate consequatur magnam
+                perspiciatis quidem, commodi dolorem harum similique.
+            </p>
+            <button>See More Details</button>
+        </element>
+        <element class="right-container">
+            <div class="cards">
+                <p>Simplified</p>
+                <h2>Complex tasks are now simple</h2>
+            </div>
+            <div class="cards">
+                <p>Simplified</p>
+                <h2>Complex tasks are now simple</h2>
+            </div>
+            <div class="cards">
+                <p>Simplified</p>
+                <h2>Complex tasks are now simple</h2>
+            </div>
+            <div class="cards">
+                <p>Simplified</p>
+                <h2>Complex tasks are now simple</h2>
+            </div>
+            <div class="cards">
+                <p>Simplified</p>
+                <h2>Complex tasks are now simple</h2>
+            </div>
+        </element>
+    </div>
+
+    <script>
+        let cards = document.querySelectorAll('.cards');
+        let container = document.querySelector('.container');
+
+        rotateCards();
+        function rotateCards() {
+            let angle = 0;
+            cards.forEach((card, index) => {
+
+                if (card.classList.contains("away")) {
+                    card.style.transform = "translateY(-120vh) rotate(-48deg)";
+                } else {
+                    card.style.transform = `rotate(${angle}deg)`;
+                    angle -= 10;
+                    card.style.zIndex = cards.length - index;
+                }
+            });
+        }
+
+        window.addEventListener("scroll", _ => {
+            let distance = window.innerHeight / 2;
+            let topVal = container.getBoundingClientRect().top;
+            let index = -1 * (topVal / distance + 1);
+
+            index = Math.floor(index);
+            for (let i = 0; i < cards.length; i++) {
+                if (i <= index) {
+                    cards[i].classList.add("away");
+                } else {
+                    cards[i].classList.remove("away");
+                }
+                rotateCards();
+                console.log(i);
+            }
+
+        })
+    </script>
+</body>
+
+</html>
